@@ -1,9 +1,9 @@
 spring:
   datasource:
-    name: rtdsDataSource
+    name: rtdsDS
     url: jdbc:oracle:thin:@localhost:1521/orcl1pdb1
-    username: cdm_rtds
-    password: cdm_rtds
+    username: username
+    password: PWD
     driver-class-name: oracle.jdbc.OracleDriver
     maximumPoolSize: 50
     minimumIdle: 5
