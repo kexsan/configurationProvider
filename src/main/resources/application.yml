@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    name: rtdsDataSource
+    url: jdbc:oracle:thin:@localhost:1521/orcl1pdb1
+    username: cdm_rtds
+    password: cdm_rtds
+    driver-class-name: oracle.jdbc.OracleDriver
+    maximumPoolSize: 50
+    minimumIdle: 5
+    poolName: POOL_MUTABLE

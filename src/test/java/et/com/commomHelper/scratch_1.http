@@ -1,0 +1,4 @@
+POST http://localhost:8080/cfg/add
+Content-Type: application/x-www-form-urlencoded
+
+key=999&value=content
