@@ -17,14 +17,14 @@ public class TableService {
     @Autowired
     private DataSource dataSource;
 
-    public List<String> getTableNames() {
+    public List<String> getTableNames(String schemaName) {
         List<String> tableNames = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
             DatabaseMetaData metaData = connection.getMetaData();
 
             // Получение списка всех таблиц в базе данных
-            try (ResultSet resultSet = metaData.getTables(null, null, "%", new String[]{"TABLE"})) {
+            try (ResultSet resultSet = metaData.getTables(null, schemaName, "%", new String[]{"TABLE"})) {
                 while (resultSet.next()) {
                     String tableName = resultSet.getString("TABLE_NAME");
                     tableNames.add(tableName);
