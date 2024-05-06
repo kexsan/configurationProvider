@@ -13,21 +13,35 @@ public class DataSourceConfig {
     @Bean(name = "oraDataSource")
     @Primary
     public DataSource getOraDataSource() {
-        return DataSourceBuilder.create()
+        DataSource dataSource = DataSourceBuilder.create()
                 .driverClassName("oracle.jdbc.OracleDriver")
                 .url("jdbc:oracle:thin:@localhost:1521/orcl1pdb1")
                 .username("OCRM_CORE")
                 .password("OCRM_CORE")
                 .build();
+
+        return configurePool(dataSource);
     }
 
     @Bean(name = "pgSqlDataSource")
     public DataSource postgreDataSource() {
-        return DataSourceBuilder.create()
-                .driverClassName("org.postgresql.Driver") // Класс драйвера для PostgreSQL
-                .url("jdbc:postgresql://localhost:5432/postgres") // URL подключения к PostgreSQL
-                .username("postgres") // Имя пользователя PostgreSQL
-                .password("admin") // Пароль PostgreSQL
+        DataSource dataSource = DataSourceBuilder.create()
+                .driverClassName("org.postgresql.Driver") 
+                .url("jdbc:postgresql://localhost:5432/postgres") 
+                .username("postgres") 
+                .password("admin") 
                 .build();
+        return configurePool(dataSource);
     }
+
+    private DataSource configurePool(DataSource dataSource) {
+        if (dataSource instanceof com.zaxxer.hikari.HikariDataSource) {
+            com.zaxxer.hikari.HikariDataSource hikariDataSource = (com.zaxxer.hikari.HikariDataSource) dataSource;
+            hikariDataSource.setPoolName("POOL_MUTABLE");
+            hikariDataSource.setMaximumPoolSize(50);
+            hikariDataSource.setMinimumIdle(5);
+        }
+        return dataSource;
+    }
+
 }
