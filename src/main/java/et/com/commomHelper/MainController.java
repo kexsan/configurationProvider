@@ -52,12 +52,22 @@ public class MainController {
         return userRepository.findById(Long.valueOf(id));
     }
 
-    @GetMapping(path = "/tn")
+    @GetMapping(path = "/otn")
     public @ResponseBody
     List<String> tn(@RequestParam String schemaName) {
         // This returns a JSON or XML with the users
         System.out.println(environment.getProperty("spring.datasource.url"));
-        List<String> tableNames = tableService.getTableNames(schemaName);
+        List<String> tableNames = tableService.getOraTableNames(schemaName);
+        tableNames.forEach(System.out::println);
+        return tableNames;
+    }
+
+    @GetMapping(path = "/pgstn")
+    public @ResponseBody
+    List<String> pgstn(@RequestParam String schemaName) {
+        // This returns a JSON or XML with the users
+        System.out.println(environment.getProperty("spring.datasource.url"));
+        List<String> tableNames = tableService.getPgSqlTableNames(schemaName);
         tableNames.forEach(System.out::println);
         return tableNames;
     }
